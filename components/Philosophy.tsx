@@ -25,35 +25,25 @@ export default function Philosophy() {
 
       if (!image || !content || !counter) return
 
-      // Image clip-path reveal (animate the wrapper, not the image itself)
+      // Image reveal animation
       const imageWrap = image.parentElement
       if (imageWrap) {
         gsap.fromTo(
           imageWrap,
-          { clipPath: 'inset(100% 0 0 0)' },
+          { opacity: 0, y: 40 },
           {
-            clipPath: 'inset(0 0 0 0)',
-            duration: 1.4,
-            ease: 'power4.inOut',
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: imageWrap,
-              start: 'top 82%',
+              start: 'top 85%',
+              once: true,
             },
           }
         )
       }
-
-      // Image parallax
-      gsap.to(image, {
-        yPercent: -22,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: image,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-      })
 
       // Text elements staggered reveal
       const textElements = content.querySelectorAll(
