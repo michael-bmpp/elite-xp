@@ -140,7 +140,7 @@ export default function Services() {
           <div className="services__card" key={service.title}>
             <div
               className="services__card-img"
-              style={{ background: service.bg }}
+              style={{ backgroundImage: service.bg }}
             />
             <div className="services__card-overlay" />
             <div className="services__card-content">

@@ -313,7 +313,7 @@ input, textarea, select {
   grid-template-rows: 1fr auto;
   align-items: end;
   padding: 0 var(--section-px);
-  padding-bottom: 80px;
+  padding-bottom: 160px;
 }
 
 .hero__bg,
@@ -420,7 +420,7 @@ input, textarea, select {
 /* Pill CTA */
 .hero__cta {
   position: absolute;
-  bottom: 160px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -464,7 +464,7 @@ input, textarea, select {
 /* Scroll Indicator */
 .hero__scroll {
   position: absolute;
-  bottom: 40px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
