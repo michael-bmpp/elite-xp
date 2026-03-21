@@ -99,7 +99,7 @@ export default function Philosophy() {
             className="philosophy__image"
             ref={imageRef}
             style={{
-              background:
+              backgroundImage:
                 'url(/images/philosophy/philosophy.jpg)',
             }}
           />
