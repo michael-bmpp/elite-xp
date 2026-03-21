@@ -12,6 +12,11 @@ export default function Quote() {
   const { t } = useLanguage()
   const containerRef = useRef<HTMLElement>(null)
 
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   useGSAP(
     () => {
       if (!containerRef.current) return
@@ -74,6 +79,9 @@ export default function Quote() {
         <cite className="quote__attribution">
           {t('Die Vision hinter L\u2019Elite', 'The Vision Behind L\u2019Elite')}
         </cite>
+        <a href="#contact" className="quote__cta" onClick={scrollToContact}>
+          {t('Sprechen Sie mit uns', 'Talk to Us')} &rarr;
+        </a>
       </div>
     </section>
   )

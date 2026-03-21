@@ -4,12 +4,14 @@ import { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import Link from 'next/link'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   {
+    slug: 'oktoberfest',
     location: 'München',
     locationEn: 'Munich',
     title: 'Oktoberfest',
@@ -19,6 +21,7 @@ const services = [
     bg: 'url(/images/services/services-oktoberfest.jpg)',
   },
   {
+    slug: 'sport',
     location: 'Europaweit',
     locationEn: 'Europe-wide',
     title: 'Sport & Hospitality',
@@ -28,6 +31,7 @@ const services = [
     bg: 'url(/images/services/services-sport.jpg)',
   },
   {
+    slug: 'konzerte',
     location: 'Weltweit',
     locationEn: 'Worldwide',
     title: 'Konzerte & Live-Events',
@@ -37,6 +41,7 @@ const services = [
     bg: 'url(/images/services/services-konzerte.jpg)',
   },
   {
+    slug: 'cannes',
     location: 'Cannes',
     locationEn: 'Cannes',
     title: 'Filmfestspiele',
@@ -46,6 +51,7 @@ const services = [
     bg: 'url(/images/services/services-cannes.jpg)',
   },
   {
+    slug: 'monaco',
     location: 'Monaco',
     locationEn: 'Monaco',
     title: 'Formel 1 & Yachts',
@@ -55,6 +61,7 @@ const services = [
     bg: 'url(/images/services/services-monaco.jpg)',
   },
   {
+    slug: 'ibiza',
     location: 'Ibiza',
     locationEn: 'Ibiza',
     title: 'Villen & Clubs',
@@ -69,6 +76,11 @@ export default function Services() {
   const { t } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   useGSAP(
     () => {
@@ -153,6 +165,14 @@ export default function Services() {
               <p className="services__card-desc">
                 {t(service.desc, service.descEn)}
               </p>
+            </div>
+            <div className="services__card-actions">
+              <Link href={`/services/${service.slug}`} className="services__card-link">
+                {t('Mehr erfahren', 'Learn More')}
+              </Link>
+              <a href="#contact" className="services__card-btn" onClick={scrollToContact}>
+                {t('Anfragen', 'Inquire')}
+              </a>
             </div>
           </div>
         ))}

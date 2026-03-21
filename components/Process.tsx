@@ -19,6 +19,11 @@ export default function Process() {
   const { t } = useLanguage()
   const containerRef = useRef<HTMLElement>(null)
 
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   useGSAP(
     () => {
       if (!containerRef.current) return
@@ -73,6 +78,13 @@ export default function Process() {
             </p>
           </div>
         ))}
+      </div>
+
+      <div className="process__cta-wrap">
+        <a href="#contact" className="process__cta" onClick={scrollToContact}>
+          {t('Jetzt Erlebnis anfragen', 'Request Your Experience Now')}
+          <span>&rarr;</span>
+        </a>
       </div>
     </section>
   )

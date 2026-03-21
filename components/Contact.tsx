@@ -5,306 +5,15 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
+import { services, type ServiceField } from '@/lib/services'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* ─── Service definitions with contextual fields ─── */
-
-interface ServiceField {
-  key: string
-  type: 'text' | 'number' | 'date' | 'select' | 'daterange'
-  label: { de: string; en: string }
-  placeholder?: { de: string; en: string }
-  options?: { de: string; en: string; value: string }[]
-  required?: boolean
+interface ContactProps {
+  preselectedService?: string
 }
 
-interface ServiceConfig {
-  id: string
-  label: { de: string; en: string }
-  fields: ServiceField[]
-}
-
-const serviceConfigs: ServiceConfig[] = [
-  {
-    id: 'oktoberfest',
-    label: { de: 'München — Oktoberfest', en: 'Munich — Oktoberfest' },
-    fields: [
-      {
-        key: 'date',
-        type: 'daterange',
-        label: { de: 'Gewünschter Zeitraum', en: 'Preferred Dates' },
-        required: true,
-      },
-      {
-        key: 'guests',
-        type: 'number',
-        label: { de: 'Anzahl Gäste', en: 'Number of Guests' },
-        placeholder: { de: 'z.B. 4', en: 'e.g. 4' },
-        required: true,
-      },
-      {
-        key: 'tent',
-        type: 'select',
-        label: { de: 'Wunschzelt', en: 'Preferred Tent' },
-        options: [
-          { de: 'Keine Präferenz', en: 'No Preference', value: 'none' },
-          { de: 'Schottenhamel', en: 'Schottenhamel', value: 'schottenhamel' },
-          { de: 'Käfer Wiesn-Schänke', en: 'Käfer Wiesn-Schänke', value: 'kaefer' },
-          { de: 'Marstall', en: 'Marstall', value: 'marstall' },
-          { de: 'Hippodrom', en: 'Hippodrom', value: 'hippodrom' },
-          { de: 'Weinzelt', en: 'Wine Tent', value: 'weinzelt' },
-          { de: 'Anderes Zelt', en: 'Other Tent', value: 'other' },
-        ],
-      },
-      {
-        key: 'hotel',
-        type: 'select',
-        label: { de: 'Hotelpaket gewünscht?', en: 'Hotel Package?' },
-        options: [
-          { de: 'Ja, mit Luxushotel', en: 'Yes, with Luxury Hotel', value: 'luxury' },
-          { de: 'Ja, gutes Mittelklassehotel', en: 'Yes, Upscale Hotel', value: 'upscale' },
-          { de: 'Nein, nur Tischreservierung', en: 'No, Table Only', value: 'no' },
-        ],
-      },
-      {
-        key: 'transfer',
-        type: 'select',
-        label: { de: 'Transfer & Betreuung', en: 'Transfer & Service' },
-        options: [
-          { de: 'Ja, Komplettpaket', en: 'Yes, Full Package', value: 'full' },
-          { de: 'Nur Transfer', en: 'Transfer Only', value: 'transfer' },
-          { de: 'Nicht benötigt', en: 'Not Needed', value: 'no' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'sports',
-    label: { de: 'Sport & Hospitality', en: 'Sports & Hospitality' },
-    fields: [
-      {
-        key: 'event',
-        type: 'text',
-        label: { de: 'Event / Spiel', en: 'Event / Match' },
-        placeholder: { de: 'z.B. FC Bayern vs. Real Madrid, EURO 2026', en: 'e.g. FC Bayern vs. Real Madrid, EURO 2026' },
-        required: true,
-      },
-      {
-        key: 'tickets',
-        type: 'number',
-        label: { de: 'Anzahl Tickets', en: 'Number of Tickets' },
-        placeholder: { de: 'z.B. 2', en: 'e.g. 2' },
-        required: true,
-      },
-      {
-        key: 'level',
-        type: 'select',
-        label: { de: 'VIP-Level', en: 'VIP Level' },
-        options: [
-          { de: 'Loge / Skybox', en: 'Suite / Skybox', value: 'skybox' },
-          { de: 'Hospitality-Bereich', en: 'Hospitality Area', value: 'hospitality' },
-          { de: 'Premium-Tribüne', en: 'Premium Seats', value: 'premium' },
-          { de: 'Beste verfügbare Kategorie', en: 'Best Available', value: 'best' },
-        ],
-      },
-      {
-        key: 'hotel',
-        type: 'select',
-        label: { de: 'Hotel gewünscht?', en: 'Hotel Required?' },
-        options: [
-          { de: 'Ja, in Stadionnähe', en: 'Yes, Near Stadium', value: 'near' },
-          { de: 'Ja, Stadthotel', en: 'Yes, City Hotel', value: 'city' },
-          { de: 'Nein', en: 'No', value: 'no' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'concerts',
-    label: { de: 'Konzerte & Live-Events', en: 'Concerts & Live Events' },
-    fields: [
-      {
-        key: 'artist',
-        type: 'text',
-        label: { de: 'Künstler / Event', en: 'Artist / Event' },
-        placeholder: { de: 'z.B. Coldplay, Adele', en: 'e.g. Coldplay, Adele' },
-        required: true,
-      },
-      {
-        key: 'city',
-        type: 'text',
-        label: { de: 'Bevorzugte Stadt / Venue', en: 'Preferred City / Venue' },
-        placeholder: { de: 'z.B. München, London Wembley', en: 'e.g. Munich, London Wembley' },
-      },
-      {
-        key: 'tickets',
-        type: 'number',
-        label: { de: 'Anzahl Tickets', en: 'Number of Tickets' },
-        placeholder: { de: 'z.B. 2', en: 'e.g. 2' },
-        required: true,
-      },
-      {
-        key: 'experience',
-        type: 'select',
-        label: { de: 'Erlebnis-Level', en: 'Experience Level' },
-        options: [
-          { de: 'Backstage / Meet & Greet', en: 'Backstage / Meet & Greet', value: 'backstage' },
-          { de: 'VIP-Bereich / Lounge', en: 'VIP Area / Lounge', value: 'vip' },
-          { de: 'Beste Plätze', en: 'Best Seats', value: 'best' },
-          { de: 'Offen für Vorschläge', en: 'Open to Suggestions', value: 'open' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'cannes',
-    label: { de: 'Cannes — Filmfestspiele', en: 'Cannes — Film Festival' },
-    fields: [
-      {
-        key: 'date',
-        type: 'daterange',
-        label: { de: 'Gewünschter Zeitraum', en: 'Preferred Dates' },
-        required: true,
-      },
-      {
-        key: 'guests',
-        type: 'number',
-        label: { de: 'Anzahl Personen', en: 'Number of Guests' },
-        placeholder: { de: 'z.B. 2', en: 'e.g. 2' },
-        required: true,
-      },
-      {
-        key: 'interests',
-        type: 'select',
-        label: { de: 'Schwerpunkt', en: 'Main Interest' },
-        options: [
-          { de: 'Akkreditierung & Screenings', en: 'Accreditation & Screenings', value: 'screenings' },
-          { de: 'Gala-Events & Partys', en: 'Gala Events & Parties', value: 'galas' },
-          { de: 'Fine Dining & Restaurants', en: 'Fine Dining & Restaurants', value: 'dining' },
-          { de: 'Komplettpaket', en: 'Complete Package', value: 'complete' },
-        ],
-      },
-      {
-        key: 'accommodation',
-        type: 'select',
-        label: { de: 'Unterkunft', en: 'Accommodation' },
-        options: [
-          { de: 'Luxushotel (Croisette)', en: 'Luxury Hotel (Croisette)', value: 'luxury' },
-          { de: 'Private Villa', en: 'Private Villa', value: 'villa' },
-          { de: 'Yacht-Charter', en: 'Yacht Charter', value: 'yacht' },
-          { de: 'Bereits organisiert', en: 'Already Arranged', value: 'none' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'monaco',
-    label: { de: 'Monaco — Formel 1', en: 'Monaco — Formula 1' },
-    fields: [
-      {
-        key: 'guests',
-        type: 'number',
-        label: { de: 'Anzahl Personen', en: 'Number of Guests' },
-        placeholder: { de: 'z.B. 4', en: 'e.g. 4' },
-        required: true,
-      },
-      {
-        key: 'experience',
-        type: 'select',
-        label: { de: 'Erlebnis-Typ', en: 'Experience Type' },
-        options: [
-          { de: 'Yacht-Party mit Streckenblick', en: 'Yacht Party with Track View', value: 'yacht' },
-          { de: 'Trackside-Apartment', en: 'Trackside Apartment', value: 'apartment' },
-          { de: 'Grandstand VIP', en: 'Grandstand VIP', value: 'grandstand' },
-          { de: 'Hospitality-Suite', en: 'Hospitality Suite', value: 'hospitality' },
-          { de: 'Komplettpaket', en: 'Complete Package', value: 'complete' },
-        ],
-      },
-      {
-        key: 'days',
-        type: 'select',
-        label: { de: 'Tage', en: 'Days' },
-        options: [
-          { de: 'Gesamtes Rennwochenende', en: 'Full Race Weekend', value: 'full' },
-          { de: 'Nur Renntag (Sonntag)', en: 'Race Day Only (Sunday)', value: 'sunday' },
-          { de: 'Qualifying + Rennen', en: 'Qualifying + Race', value: 'quali-race' },
-        ],
-      },
-      {
-        key: 'extras',
-        type: 'select',
-        label: { de: 'Zusätzliche Wünsche', en: 'Additional Requests' },
-        options: [
-          { de: 'Afterparty-Zugang', en: 'Afterparty Access', value: 'afterparty' },
-          { de: 'Helikopter-Transfer', en: 'Helicopter Transfer', value: 'heli' },
-          { de: 'Fine Dining Reservierungen', en: 'Fine Dining Reservations', value: 'dining' },
-          { de: 'Keine weiteren', en: 'None', value: 'none' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'ibiza',
-    label: { de: 'Ibiza', en: 'Ibiza' },
-    fields: [
-      {
-        key: 'date',
-        type: 'daterange',
-        label: { de: 'Reisezeitraum', en: 'Travel Dates' },
-        required: true,
-      },
-      {
-        key: 'guests',
-        type: 'number',
-        label: { de: 'Anzahl Personen', en: 'Number of Guests' },
-        placeholder: { de: 'z.B. 6', en: 'e.g. 6' },
-        required: true,
-      },
-      {
-        key: 'accommodation',
-        type: 'select',
-        label: { de: 'Unterkunft', en: 'Accommodation' },
-        options: [
-          { de: 'Private Luxusvilla', en: 'Private Luxury Villa', value: 'villa' },
-          { de: 'Boutique-Hotel', en: 'Boutique Hotel', value: 'hotel' },
-          { de: 'Finca', en: 'Finca', value: 'finca' },
-          { de: 'Bereits organisiert', en: 'Already Arranged', value: 'none' },
-        ],
-      },
-      {
-        key: 'clubs',
-        type: 'select',
-        label: { de: 'Club-Interesse', en: 'Club Interest' },
-        options: [
-          { de: 'Pacha', en: 'Pacha', value: 'pacha' },
-          { de: 'Hï Ibiza', en: 'Hï Ibiza', value: 'hi' },
-          { de: 'Ushuaïa', en: 'Ushuaïa', value: 'ushuaia' },
-          { de: 'Amnesia', en: 'Amnesia', value: 'amnesia' },
-          { de: 'Alle / Offen', en: 'All / Open', value: 'all' },
-        ],
-      },
-      {
-        key: 'extras',
-        type: 'select',
-        label: { de: 'Extras', en: 'Extras' },
-        options: [
-          { de: 'Yacht-Charter', en: 'Yacht Charter', value: 'yacht' },
-          { de: 'Privatkoch', en: 'Private Chef', value: 'chef' },
-          { de: 'Sunset-Experience', en: 'Sunset Experience', value: 'sunset' },
-          { de: 'Keine weiteren', en: 'None', value: 'none' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'other',
-    label: { de: 'Sonstiges', en: 'Other' },
-    fields: [],
-  },
-]
-
-export default function Contact() {
+export default function Contact({ preselectedService }: ContactProps) {
   const { t } = useLanguage()
   const containerRef = useRef<HTMLElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
@@ -321,7 +30,17 @@ export default function Contact() {
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState(false)
 
-  const activeConfig = serviceConfigs.find((s) => s.id === selectedService)
+  // Pre-select service on mount if prop provided
+  useEffect(() => {
+    if (preselectedService) {
+      const match = services.find((s) => s.slug === preselectedService)
+      if (match) {
+        setSelectedService(match.slug)
+      }
+    }
+  }, [preselectedService])
+
+  const activeConfig = services.find((s) => s.slug === selectedService)
 
   // Animate dynamic fields when they appear
   useEffect(() => {
@@ -347,8 +66,8 @@ export default function Contact() {
     )
   }, [selectedService, activeConfig?.fields.length])
 
-  const handleServiceChange = (id: string) => {
-    setSelectedService(id)
+  const handleServiceChange = (slug: string) => {
+    setSelectedService(slug)
     setDynamicValues({})
     setDateFrom('')
     setDateTo('')
@@ -428,7 +147,7 @@ export default function Contact() {
                 required={field.required}
               />
             </div>
-            <span className="contact__date-separator">—</span>
+            <span className="contact__date-separator">&mdash;</span>
             <div className="contact__date-input-wrap">
               <span className="contact__date-label">{t('Bis', 'To')}</span>
               <input
@@ -514,90 +233,143 @@ export default function Contact() {
         </div>
 
         <form className="contact__form" ref={formRef} onSubmit={handleSubmit}>
-          {/* Base fields */}
-          <div className="contact__form-row">
-            <input
-              type="text"
-              className="contact__input"
-              placeholder={t('Vorname', 'First Name')}
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              className="contact__input"
-              placeholder={t('Nachname', 'Last Name')}
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
+          {/* ── Step 01: Personal Data ── */}
+          <div className="contact__step">
+            <div className="contact__step-label">
+              <span className="contact__step-number">01</span>
+              <span className="contact__step-divider" />
+              <span className="contact__step-text">
+                {t('Persönliche Daten', 'Personal Details')}
+              </span>
+            </div>
+
+            <div className="contact__form-row">
+              <div className="contact__input-group">
+                <label className="contact__field-label">
+                  {t('Vorname', 'First Name')}
+                </label>
+                <input
+                  type="text"
+                  className="contact__input"
+                  placeholder={t('Vorname', 'First Name')}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="contact__input-group">
+                <label className="contact__field-label">
+                  {t('Nachname', 'Last Name')}
+                </label>
+                <input
+                  type="text"
+                  className="contact__input"
+                  placeholder={t('Nachname', 'Last Name')}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="contact__form-row">
+              <div className="contact__input-group">
+                <label className="contact__field-label">
+                  {t('E-Mail-Adresse', 'Email Address')}
+                </label>
+                <input
+                  type="email"
+                  className="contact__input"
+                  placeholder={t('E-Mail-Adresse', 'Email Address')}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="contact__input-group">
+                <label className="contact__field-label">
+                  {t('Telefon (optional)', 'Phone (optional)')}
+                </label>
+                <input
+                  type="tel"
+                  className="contact__input"
+                  placeholder={t('Telefon (optional)', 'Phone (optional)')}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="contact__form-row">
-            <input
-              type="email"
-              className="contact__input"
-              placeholder={t('E-Mail-Adresse', 'Email Address')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="tel"
-              className="contact__input"
-              placeholder={t('Telefon (optional)', 'Phone (optional)')}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
+          {/* ── Step 02: Experience / Service Selector ── */}
+          <div className="contact__step">
+            <div className="contact__step-label">
+              <span className="contact__step-number">02</span>
+              <span className="contact__step-divider" />
+              <span className="contact__step-text">
+                {t('Ihr Erlebnis', 'Your Experience')}
+              </span>
+            </div>
 
-          {/* Service selector */}
-          <div className="contact__service-selector">
-            <label className="contact__field-label">
-              {t('Welches Erlebnis interessiert Sie?', 'Which experience interests you?')}
-            </label>
-            <div className="contact__service-grid">
-              {serviceConfigs.map((service) => (
+            <div className="contact__service-cards">
+              {services.map((service) => (
                 <button
-                  key={service.id}
+                  key={service.slug}
                   type="button"
-                  className={`contact__service-pill${selectedService === service.id ? ' is-active' : ''}`}
-                  onClick={() => handleServiceChange(service.id)}
+                  className={`contact__service-card${selectedService === service.slug ? ' is-active' : ''}`}
+                  onClick={() => handleServiceChange(service.slug)}
                 >
-                  {t(service.label.de, service.label.en)}
+                  <span className="contact__service-card-location">
+                    {t(service.location.de, service.location.en)}
+                  </span>
+                  <span className="contact__service-card-name">
+                    {t(service.label.de, service.label.en)}
+                  </span>
                 </button>
               ))}
             </div>
+
+            {/* Dynamic fields based on selected service */}
+            {activeConfig && activeConfig.fields.length > 0 && (
+              <div className="contact__dynamic-fields" ref={dynamicFieldsRef} key={selectedService}>
+                <div className="contact__dynamic-header">
+                  <span className="contact__dynamic-label">
+                    {t(
+                      `Details zu ${activeConfig.label.de}`,
+                      `Details for ${activeConfig.label.en}`
+                    )}
+                  </span>
+                </div>
+                {activeConfig.fields.map(renderField)}
+              </div>
+            )}
           </div>
 
-          {/* Dynamic fields based on selected service */}
-          {activeConfig && activeConfig.fields.length > 0 && (
-            <div className="contact__dynamic-fields" ref={dynamicFieldsRef} key={selectedService}>
-              <div className="contact__dynamic-header">
-                <span className="contact__dynamic-label">
-                  {t(
-                    `Details zu ${activeConfig.label.de}`,
-                    `Details for ${activeConfig.label.en}`
-                  )}
-                </span>
-              </div>
-              {activeConfig.fields.map(renderField)}
+          {/* ── Step 03: Message ── */}
+          <div className="contact__step">
+            <div className="contact__step-label">
+              <span className="contact__step-number">03</span>
+              <span className="contact__step-divider" />
+              <span className="contact__step-text">
+                {t('Nachricht', 'Message')}
+              </span>
             </div>
-          )}
 
-          {/* Message */}
-          <div className="contact__message-wrap">
-            <textarea
-              className="contact__textarea"
-              placeholder={t(
-                'Erzählen Sie uns von Ihrem Wunscherlebnis — jedes Detail hilft uns, das perfekte Package zu schnüren.',
-                'Tell us about your dream experience — every detail helps us craft the perfect package.'
-              )}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={4}
-            />
+            <div className="contact__message-wrap">
+              <label className="contact__field-label">
+                {t('Ihre Nachricht', 'Your Message')}
+              </label>
+              <textarea
+                className="contact__textarea"
+                placeholder={t(
+                  'Erzählen Sie uns von Ihrem Wunscherlebnis — jedes Detail hilft uns, das perfekte Package zu schnüren.',
+                  'Tell us about your dream experience — every detail helps us craft the perfect package.'
+                )}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={4}
+              />
+            </div>
           </div>
 
           {/* Submit */}

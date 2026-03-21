@@ -15,6 +15,11 @@ export default function Philosophy() {
   const contentRef = useRef<HTMLDivElement>(null)
   const counterRef = useRef<HTMLSpanElement>(null)
 
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   useGSAP(
     () => {
       if (!sectionRef.current) return
@@ -139,6 +144,11 @@ export default function Philosophy() {
               </span>
             </div>
           </div>
+
+          <a href="#contact" className="philosophy__cta" onClick={scrollToContact}>
+            {t('Erlebnis anfragen', 'Inquire Now')}
+            <span className="philosophy__cta-arrow">&rarr;</span>
+          </a>
         </div>
       </div>
     </section>
