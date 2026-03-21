@@ -13,10 +13,10 @@ interface HeroProps {
 }
 
 const heroImages = [
-  'linear-gradient(135deg, #2C1810 0%, #4A2C1A 100%)',
-  'linear-gradient(135deg, #1A2332 0%, #2A3F5F 100%)',
-  'linear-gradient(135deg, #1C2B1A 0%, #2A4A28 100%)',
-  'linear-gradient(135deg, #2D1F3D 0%, #1A1A2E 100%)',
+  'url(/images/hero/oktoberfest.jpg)',
+  'url(/images/hero/f1monaco.jpg)',
+  'url(/images/hero/fcbayern.jpg)',
+  'url(/images/hero/konzerte.jpg)',
 ]
 
 const rotatorPhrases = [

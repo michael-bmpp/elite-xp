@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(npx next:*)",
+      "Bash(npm run:*)",
+      "Bash(npm i:*)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(vercel link:*)",
+      "Bash(npx vercel:*)",
+      "Read(//Users/michaelmair/Desktop/**)",
+      "Read(//Users/michaelmair/Downloads/**)",
+      "Bash(for f:*)",
+      "Bash(do cp:*)",
+      "Bash(done)",
+      "Bash(do sips:*)",
+      "Bash(rm *.png)",
+      "Bash(ls -lh *.jpg)",
+      "Bash(cp \"/Users/michaelmair/Downloads/Chrome Downloads/philosophy.png\" /Users/michaelmair/Desktop/lelite-website/public/images/philosophy/)",
+      "Bash(sips -s format jpeg -s formatOptions 82 philosophy.png --out philosophy.jpg)"
+    ]
+  }
+}

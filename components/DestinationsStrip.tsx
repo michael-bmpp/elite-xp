@@ -3,14 +3,14 @@
 import { useLanguage } from '@/components/providers/LanguageProvider'
 
 const cities = [
-  { city: 'München', country: 'Deutschland', bg: 'linear-gradient(135deg, #3D2B1F 0%, #5C3D2E 100%)' },
-  { city: 'Monaco', country: 'Monaco', bg: 'linear-gradient(135deg, #1A2744 0%, #2B4570 100%)' },
-  { city: 'Ibiza', country: 'Spanien', bg: 'linear-gradient(135deg, #1B4B6C 0%, #2980B9 100%)' },
-  { city: 'London', country: 'England', bg: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)' },
-  { city: 'Mailand', country: 'Italien', bg: 'linear-gradient(135deg, #4A3728 0%, #6B4E3D 100%)' },
-  { city: 'Paris', country: 'Frankreich', bg: 'linear-gradient(135deg, #2C2C54 0%, #474787 100%)' },
-  { city: 'Kitzbühel', country: 'Österreich', bg: 'linear-gradient(135deg, #1E3A2F 0%, #2D5A47 100%)' },
-  { city: 'St. Moritz', country: 'Schweiz', bg: 'linear-gradient(135deg, #34495E 0%, #5D6D7E 100%)' },
+  { city: 'München', country: 'Deutschland', bg: 'url(/images/destinations/muenchen.jpg)' },
+  { city: 'Monaco', country: 'Monaco', bg: 'url(/images/destinations/monaco.jpg)' },
+  { city: 'Ibiza', country: 'Spanien', bg: 'url(/images/destinations/ibiza.jpg)' },
+  { city: 'London', country: 'England', bg: 'url(/images/destinations/london.jpg)' },
+  { city: 'Mailand', country: 'Italien', bg: 'url(/images/destinations/mailand.jpg)' },
+  { city: 'Paris', country: 'Frankreich', bg: 'url(/images/destinations/paris.jpg)' },
+  { city: 'Kitzbühel', country: 'Österreich', bg: 'url(/images/destinations/kitzbuehel.jpg)' },
+  { city: 'St. Moritz', country: 'Schweiz', bg: 'url(/images/destinations/stmoritz.jpg)' },
 ]
 
 export default function DestinationsStrip() {
@@ -25,7 +25,7 @@ export default function DestinationsStrip() {
           <div className="destinations__card" key={`${item.city}-${i}`}>
             <div
               className="destinations__card-img"
-              style={{ background: item.bg }}
+              style={{ backgroundImage: item.bg }}
             />
             <div className="destinations__card-overlay" />
             <div className="destinations__card-label">

@@ -100,7 +100,7 @@ export default function Philosophy() {
             ref={imageRef}
             style={{
               background:
-                'linear-gradient(135deg, #3D2B1F 0%, #5C4033 50%, #8B7355 100%)',
+                'url(/images/philosophy/philosophy.jpg)',
             }}
           />
         </div>

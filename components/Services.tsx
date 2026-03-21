@@ -16,7 +16,7 @@ const services = [
     titleEn: 'Oktoberfest',
     desc: 'Exklusive Zeltplätze, Luxushotel, Transfer & persönliche Betreuung',
     descEn: 'Exclusive tent reservations, luxury hotel, transfer & personal service',
-    bg: 'linear-gradient(135deg, #5C3D2E 0%, #8B6914 100%)',
+    bg: 'url(/images/services/services-oktoberfest.jpg)',
   },
   {
     location: 'Europaweit',
@@ -25,7 +25,7 @@ const services = [
     titleEn: 'Sports & Hospitality',
     desc: 'Champions League, Bundesliga, EURO, WM — VIP-Tickets & Logen',
     descEn: 'Champions League, Bundesliga, EURO, World Cup — VIP tickets & suites',
-    bg: 'linear-gradient(135deg, #1A3C2A 0%, #2E5E3E 100%)',
+    bg: 'url(/images/services/services-sport.jpg)',
   },
   {
     location: 'Weltweit',
@@ -34,7 +34,7 @@ const services = [
     titleEn: 'Concerts & Live Events',
     desc: 'Ausverkaufte Tickets, Backstage-Zugang, VIP-Experiences',
     descEn: 'Sold-out tickets, backstage access, VIP experiences',
-    bg: 'linear-gradient(135deg, #2D1F3D 0%, #4A2D6B 100%)',
+    bg: 'url(/images/services/services-konzerte.jpg)',
   },
   {
     location: 'Cannes',
@@ -43,7 +43,7 @@ const services = [
     titleEn: 'Film Festival',
     desc: 'Akkreditierungen, Gala-Events & Fine Dining Reservierungen',
     descEn: 'Accreditations, gala events & fine dining reservations',
-    bg: 'linear-gradient(135deg, #3D2B1F 0%, #6B4E3D 100%)',
+    bg: 'url(/images/services/services-cannes.jpg)',
   },
   {
     location: 'Monaco',
@@ -52,7 +52,7 @@ const services = [
     titleEn: 'Formula 1 & Yachts',
     desc: 'Grandstand, Trackside-Apartments & exklusive Yacht-Parties',
     descEn: 'Grandstand, trackside apartments & exclusive yacht parties',
-    bg: 'linear-gradient(135deg, #1A2744 0%, #2B4570 100%)',
+    bg: 'url(/images/services/services-monaco.jpg)',
   },
   {
     location: 'Ibiza',
@@ -61,7 +61,7 @@ const services = [
     titleEn: 'Villas & Clubs',
     desc: 'Private Villen, Pacha, Hï, Ushuaïa — VIP-Zugang garantiert',
     descEn: 'Private villas, Pacha, Hï, Ushuaïa — guaranteed VIP access',
-    bg: 'linear-gradient(135deg, #1B4B6C 0%, #2980B9 100%)',
+    bg: 'url(/images/services/services-ibiza.jpg)',
   },
 ]
 
