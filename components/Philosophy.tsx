@@ -25,20 +25,23 @@ export default function Philosophy() {
 
       if (!image || !content || !counter) return
 
-      // Image clip-path reveal
-      gsap.fromTo(
-        image,
-        { clipPath: 'inset(100% 0 0 0)' },
-        {
-          clipPath: 'inset(0 0 0 0)',
-          duration: 1.4,
-          ease: 'power4.inOut',
-          scrollTrigger: {
-            trigger: image,
-            start: 'top 82%',
-          },
-        }
-      )
+      // Image clip-path reveal (animate the wrapper, not the image itself)
+      const imageWrap = image.parentElement
+      if (imageWrap) {
+        gsap.fromTo(
+          imageWrap,
+          { clipPath: 'inset(100% 0 0 0)' },
+          {
+            clipPath: 'inset(0 0 0 0)',
+            duration: 1.4,
+            ease: 'power4.inOut',
+            scrollTrigger: {
+              trigger: imageWrap,
+              start: 'top 82%',
+            },
+          }
+        )
+      }
 
       // Image parallax
       gsap.to(image, {

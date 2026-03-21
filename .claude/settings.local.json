@@ -22,7 +22,10 @@
       "Bash(rm *.png)",
       "Bash(ls -lh *.jpg)",
       "Bash(cp \"/Users/michaelmair/Downloads/Chrome Downloads/philosophy.png\" /Users/michaelmair/Desktop/lelite-website/public/images/philosophy/)",
-      "Bash(sips -s format jpeg -s formatOptions 82 philosophy.png --out philosophy.jpg)"
+      "Bash(sips -s format jpeg -s formatOptions 82 philosophy.png --out philosophy.jpg)",
+      "Bash(git -C /Users/michaelmair/Desktop/lelite-website add /Users/michaelmair/Desktop/lelite-website/public/images/philosophy/philosophy.jpg)",
+      "Bash(git -C /Users/michaelmair/Desktop/lelite-website status)",
+      "Bash(git:*)"
     ]
   }
 }
