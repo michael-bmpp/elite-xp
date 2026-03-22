@@ -1577,21 +1577,34 @@ input, textarea, select {
   }
 }
 
+/* ========== MOBILE (max-width: 768px) ========== */
 @media (max-width: 768px) {
   :root {
     --nav-height: 64px;
+    --section-py: clamp(56px, 8vw, 100px);
+    --section-px: 20px;
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    padding: 16px var(--section-px);
+  }
+
+  .nav.is-scrolled {
+    padding: 14px var(--section-px);
   }
 
   .nav__links {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(28, 24, 20, 0.95);
+    background: rgba(28, 24, 20, 0.97);
     backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 36px;
     z-index: 999;
   }
 
@@ -1600,8 +1613,18 @@ input, textarea, select {
   }
 
   .nav__link {
-    font-size: 1rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-transform: none;
     color: rgba(250, 248, 241, 0.7);
+    padding: 8px 0;
+  }
+
+  .nav__link:hover {
+    color: #FAF8F1;
   }
 
   .nav__hamburger {
@@ -1612,15 +1635,36 @@ input, textarea, select {
     display: none;
   }
 
-  /* Hero */
+  .nav__lang {
+    font-size: 0.65rem;
+  }
+
+  .nav__lang-divider {
+    display: none;
+  }
+
+  /* ── Hero ── */
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto auto;
-    padding-bottom: 120px;
+    padding-bottom: 140px;
+    padding-left: var(--section-px);
+    padding-right: var(--section-px);
   }
 
   .hero__content {
     grid-column: 1;
+    padding-bottom: 16px;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+
+  .hero__title {
+    font-size: var(--text-2xl);
   }
 
   .hero__body-text {
@@ -1630,41 +1674,185 @@ input, textarea, select {
   .hero__rotator-wrap {
     grid-column: 1;
     grid-row: 2;
+    height: clamp(2rem, 1.5rem + 3vw, 3.5rem);
   }
 
   .hero__cta {
-    bottom: 120px;
+    bottom: 80px;
+    padding: 12px 24px 12px 28px;
+    font-size: 0.68rem;
+    gap: 12px;
   }
 
-  /* Philosophy */
+  .hero__cta-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .hero__scroll {
+    bottom: 20px;
+  }
+
+  .hero__scroll-line {
+    height: 32px;
+  }
+
+  /* ── Destinations Strip ── */
+  .destinations {
+    height: 200px;
+  }
+
+  .destinations__card {
+    flex: 0 0 240px;
+  }
+
+  .destinations__card-label {
+    bottom: 16px;
+    left: 16px;
+  }
+
+  .destinations__card-city {
+    font-size: 1.15rem;
+  }
+
+  /* ── Philosophy ── */
   .philosophy__grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
   .philosophy__image-wrap {
-    max-height: 400px;
+    max-height: 360px;
+    aspect-ratio: 3 / 4;
   }
 
-  /* Services */
+  .philosophy__heading {
+    font-size: var(--text-2xl);
+  }
+
+  .philosophy__stats {
+    gap: 32px;
+  }
+
+  .philosophy__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
+  }
+
+  /* ── Services ── */
+  .services__header {
+    margin-bottom: 40px;
+  }
+
+  .services__heading {
+    font-size: var(--text-2xl);
+  }
+
   .services__grid {
     grid-template-columns: 1fr;
+    gap: 2px;
   }
 
   .services__card {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
   }
 
-  /* Process */
+  .services__card-content {
+    padding: 20px;
+  }
+
+  .services__card-title {
+    font-size: 1.15rem;
+  }
+
+  .services__card-desc {
+    font-size: 0.78rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Service card actions — always visible on mobile (no hover) */
+  .services__card-actions {
+    opacity: 1;
+    background: rgba(28, 24, 20, 0.3);
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .services__card-link,
+  .services__card-btn {
+    font-size: 0.6rem;
+    padding: 10px 20px;
+  }
+
+  /* ── Process ── */
+  .process__header {
+    margin-bottom: 48px;
+  }
+
+  .process__heading {
+    font-size: var(--text-2xl);
+  }
+
   .process__steps {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
-  /* Contact */
+  .process__step {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .process__step-number {
+    font-size: var(--text-xl);
+  }
+
+  .process__step-line {
+    height: 1px;
+    width: 32px;
+  }
+
+  .process__step-title,
+  .process__step-desc {
+    flex-basis: 100%;
+  }
+
+  .process__cta-wrap {
+    margin-top: 48px;
+  }
+
+  .process__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 18px 32px;
+  }
+
+  /* ── Quote ── */
+  .quote__text {
+    font-size: var(--text-xl);
+  }
+
+  .quote__mark {
+    font-size: clamp(3rem, 2.5rem + 3vw, 5rem);
+  }
+
+  /* ── Contact ── */
   .contact__grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
+  }
+
+  .contact__heading {
+    font-size: var(--text-2xl);
   }
 
   .contact__form-row {
@@ -1672,48 +1860,162 @@ input, textarea, select {
     gap: 0;
   }
 
+  .contact__form-row + .contact__form-row {
+    margin-top: 0;
+  }
+
+  .contact__input-group + .contact__input-group {
+    margin-top: 20px;
+  }
+
+  .contact__step {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+
   .contact__service-cards {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .contact__service-card {
+    padding: 14px 12px;
+  }
+
+  .contact__service-card-name {
+    font-size: 0.95rem;
+  }
+
+  .contact__service-card-location {
+    font-size: 0.45rem;
+  }
+
+  .contact__dynamic-fields {
+    padding-left: 16px;
   }
 
   .contact__date-range {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
   }
 
   .contact__date-separator {
     display: none;
   }
 
-  /* Footer */
+  .contact__submit {
+    margin-top: 32px;
+    padding: 18px 32px;
+  }
+
+  /* ── Footer ── */
   .footer {
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     text-align: center;
+    padding: 36px var(--section-px);
   }
 
   .footer__links {
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
   }
 
-  /* Destinations */
-  .destinations {
-    height: 220px;
+  /* ── Section CTAs ── */
+  .philosophy__cta,
+  .process__cta {
+    font-size: 0.7rem;
   }
 
-  .destinations__card {
-    flex: 0 0 260px;
+  /* ── Service Detail ── */
+  .service-detail__hero {
+    height: 40vh;
+    min-height: 280px;
+    padding-bottom: 32px;
+  }
+
+  .service-detail__title {
+    font-size: var(--text-2xl);
+  }
+
+  .service-detail__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 
+/* ========== SMALL MOBILE (max-width: 480px) ========== */
 @media (max-width: 480px) {
   .hero__rotator-phrase {
     white-space: normal;
   }
 
   .hero__cta {
-    bottom: 100px;
-    padding: 12px 20px 12px 24px;
-    font-size: 0.65rem;
+    bottom: 80px;
+    padding: 11px 18px 11px 22px;
+    font-size: 0.62rem;
+  }
+
+  .contact__service-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .services__card {
+    aspect-ratio: 3 / 2;
+  }
+
+  .destinations__card {
+    flex: 0 0 200px;
+  }
+
+  .destinations {
+    height: 170px;
+  }
+
+  .destinations__card-city {
+    font-size: 1rem;
+  }
+
+  .philosophy__stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .philosophy__stat-divider {
+    width: 48px;
+    height: 1px;
+  }
+}
+
+/* ========== Touch-friendly tap targets ========== */
+@media (pointer: coarse) {
+  .nav__link,
+  .nav__lang-btn,
+  .nav__hamburger {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact__input,
+  .contact__textarea,
+  .contact__select {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 12px 0;
+  }
+
+  .contact__service-card {
+    min-height: 64px;
+  }
+
+  .contact__submit {
+    min-height: 52px;
+  }
+
+  .footer__link {
+    padding: 8px 4px;
   }
 }

@@ -13,11 +13,20 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => 1.001 - Math.pow(2, -10 * t),
       smoothWheel: true,
+      touchMultiplier: 0,
+      syncTouch: false,
     })
+
+    // Disable Lenis on touch devices — use native scroll
+    if (isTouchDevice) {
+      lenis.stop()
+    }
 
     lenisRef.current = lenis
 

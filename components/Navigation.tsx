@@ -32,12 +32,25 @@ export default function Navigation({ preloaderDone }: NavigationProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   // Smooth scroll to section
   const scrollTo = useCallback((id: string) => {
-    const el = document.getElementById(id)
-    if (!el) return
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setMenuOpen(false)
+    // Small delay so menu closes before scroll
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 100)
   }, [])
 
   // Fade-in animation after preloader completes
