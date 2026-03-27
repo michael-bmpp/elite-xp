@@ -153,6 +153,7 @@ input, textarea, select {
   letter-spacing: 0.05em;
   color: var(--espresso);
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .preloader__wordmark span {
@@ -1305,6 +1306,7 @@ input, textarea, select {
   transition: opacity 0.5s var(--ease-expo);
   background: rgba(28, 24, 20, 0.5);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .services__card:hover .services__card-actions {
   opacity: 1;
@@ -1678,7 +1680,7 @@ input, textarea, select {
   }
 
   .hero__cta {
-    bottom: 80px;
+    bottom: 110px;
     padding: 12px 24px 12px 28px;
     font-size: 0.68rem;
     gap: 12px;
@@ -1774,10 +1776,12 @@ input, textarea, select {
     overflow: hidden;
   }
 
-  /* Service card actions — always visible on mobile (no hover) */
+  /* Service card actions — always visible on mobile (no hover, no blur) */
   .services__card-actions {
     opacity: 1;
-    background: rgba(28, 24, 20, 0.3);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
