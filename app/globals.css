@@ -153,6 +153,7 @@ input, textarea, select {
   letter-spacing: 0.05em;
   color: var(--espresso);
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .preloader__wordmark span {
