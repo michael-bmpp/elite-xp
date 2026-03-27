@@ -1305,6 +1305,7 @@ input, textarea, select {
   transition: opacity 0.5s var(--ease-expo);
   background: rgba(28, 24, 20, 0.5);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .services__card:hover .services__card-actions {
   opacity: 1;
@@ -1774,10 +1775,10 @@ input, textarea, select {
     overflow: hidden;
   }
 
-  /* Service card actions — always visible on mobile (no hover) */
+  /* Service card actions — always visible on mobile (no hover, no blur) */
   .services__card-actions {
     opacity: 1;
-    background: rgba(28, 24, 20, 0.3);
+    background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     flex-direction: row;
